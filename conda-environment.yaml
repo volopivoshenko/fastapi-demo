@@ -1,0 +1,11 @@
+name: fastapi-demo
+dependencies:
+  - python=3.6.12
+  - pip:
+    - fastapi
+    - pandas
+    - pydantic
+    - typing-extensions
+    - graphene
+    - black[d]
+    - uvicorn[standard]
