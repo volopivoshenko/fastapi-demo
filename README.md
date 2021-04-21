@@ -1,5 +1,10 @@
 # The Fastest API in the Pythonic World
 
+- [The Fastest API in the Pythonic World](#the-fastest-api-in-the-pythonic-world)
+  - [Usage](#usage)
+  - [Examples](#examples)
+  - [Resources](#resources)
+
 ## Usage
 
 To get started right away you need:
@@ -38,4 +43,4 @@ make ml
 
 ## Resources
 
-- [Slides](docs/The Fastest API in the Pythonic World.pptx)
+- [Slides](docs/The_Fastest_API_in_the_Pythonic_World.pptx)
