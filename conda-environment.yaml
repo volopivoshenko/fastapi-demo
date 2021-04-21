@@ -9,3 +9,8 @@ dependencies:
     - graphene
     - black[d]
     - uvicorn[standard]
+    - sqlalchemy
+    - graphene-pydantic
+    - Pydantic-SQLAlchemy
+    - psycopg2
+    - Faker
