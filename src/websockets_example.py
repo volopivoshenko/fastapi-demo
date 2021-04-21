@@ -16,7 +16,7 @@ async def indexPge():
     Index (start) page that shows how websockets are working.
     """
 
-    with open("src/resources/templates/websockets-index.html") as template:
+    with open("resources/templates/websockets-index.html") as template:
         page = template.read()
         template.close()
 
@@ -35,5 +35,5 @@ async def websocketsEndpoint(websocket: WebSocket) -> None:
         await websocket.send_text(f"Message text was: {data}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     uvicorn.run(app, port=8000, debug=True)

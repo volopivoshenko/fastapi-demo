@@ -12,7 +12,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-from modules.models.models import ReactivationPredictionORM
+from modules.models.reactivation import ReactivationPredictionORM
 
 load_dotenv()
 

@@ -15,8 +15,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from starlette.graphql import GraphQLApp
 
-from modules.models.models import ReactivationPredictionGraphQL
-from modules.models.models import ReactivationPredictionORM
+from modules.models.reactivation import ReactivationPredictionGraphQL
+from modules.models.reactivation import ReactivationPredictionORM
 
 load_dotenv()
 

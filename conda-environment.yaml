@@ -1,6 +1,7 @@
 name: fastapi-demo
 dependencies:
   - python=3.6.12
+  - pip
   - pip:
     - fastapi
     - pandas
@@ -14,3 +15,8 @@ dependencies:
     - Pydantic-SQLAlchemy
     - psycopg2
     - Faker
+    - pandas
+    - xgboost
+    - scikit-learn
+    - arrow
+    - dohq-artifactory
