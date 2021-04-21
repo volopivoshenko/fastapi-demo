@@ -36,4 +36,4 @@ async def websocketsEndpoint(websocket: WebSocket) -> None:
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, port=8000, debug=True)
+    uvicorn.run(app, port=8010, debug=True)

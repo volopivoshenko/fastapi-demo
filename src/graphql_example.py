@@ -87,4 +87,4 @@ class QueryGraphQL(graphene.ObjectType):
 app.add_route("/", GraphQLApp(schema=graphene.Schema(query=QueryGraphQL)))
 
 if __name__ == "__main__":
-    uvicorn.run(app, port=8000, debug=True)
+    uvicorn.run(app, port=8030, debug=True)

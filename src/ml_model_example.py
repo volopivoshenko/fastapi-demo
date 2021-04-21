@@ -79,7 +79,7 @@ async def predictXgb(request: RequestModel):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, port=8000, debug=True)
+    uvicorn.run(app, port=8020, debug=True)
 
 """
 """
