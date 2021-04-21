@@ -2,19 +2,14 @@
 Models for ML model example.
 """
 
-import logging
 from typing import Dict
 from typing import List
 from typing import Union
 
 import pydantic
 from pydantic import BaseModel
-from pydantic import conlist
 from pydantic import Field
-from pydantic import validator
 from typing_extensions import TypedDict
-
-logger = logging.getLogger(__name__)
 
 
 def createRequestModel(features_sample: Dict[str, Union[int, float, str]]) -> BaseModel:
@@ -35,20 +30,6 @@ def createRequestModel(features_sample: Dict[str, Union[int, float, str]]) -> Ba
         """
 
         members: List[MemberRequestModel] = Field(..., min_items=1)
-
-        # @validator("members")
-        # def nonEmptyList(cls, value: List[MemberRequestModel]) -> List[MemberRequestModel]:
-        #     """
-        #     Check if input list with members features are not empty
-        #     """
-        #
-        #     if value:
-        #         return value
-        #
-        #     else:
-        #         msg = "Empty request"
-        #         logger.exception(msg)
-        #         raise ValueError(msg)
 
     # noinspection PyTypeChecker
     return RequestModel

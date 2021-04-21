@@ -12,3 +12,9 @@ run-postgres:
 
 populate-db:
 	python src/populate.py
+
+graphql:
+	python src/graphql_example.py
+
+ml:
+	python src/ml_model_example.py

@@ -9,7 +9,6 @@ import arrow
 import pandas as pd
 import uvicorn
 from dotenv import load_dotenv
-from fastapi import Body
 from fastapi import FastAPI
 from fastapi import HTTPException
 from fastapi.encoders import jsonable_encoder
@@ -81,3 +80,6 @@ async def predictXgb(request: RequestModel):
 
 if __name__ == "__main__":
     uvicorn.run(app, port=8000, debug=True)
+
+"""
+"""
