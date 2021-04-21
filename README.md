@@ -38,4 +38,4 @@ make ml
 
 ## Resources
 
-- [Slides](docs/The Fastest API in the Pythonic World.pptx)
+- [Slides](docs/The_Fastest_API_in_the_Pythonic_World.pptx)
