@@ -7,7 +7,7 @@ uvicorn[standard]
 sqlalchemy
 graphene-pydantic
 Pydantic-SQLAlchemy
-psycopg2
+psycopg2-binary
 Faker
 xgboost
 scikit-learn

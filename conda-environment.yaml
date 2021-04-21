@@ -12,7 +12,7 @@ dependencies:
     - sqlalchemy
     - graphene-pydantic
     - Pydantic-SQLAlchemy
-    - psycopg2
+    - psycopg2-binary
     - Faker
     - pandas
     - xgboost
