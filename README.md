@@ -1,2 +1,1 @@
-# fastapi-demo
-FastAPI Show&amp;Tell 
+# The Fastest API in the Pythonic World
