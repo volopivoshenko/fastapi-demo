@@ -4,62 +4,43 @@ Example of GraphQL usage with FastAPI.
 
 import os
 from typing import Any
+from typing import List
 
 import graphene
 import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI
-from graphene_pydantic import PydanticObjectType
-from pydantic_sqlalchemy import sqlalchemy_to_pydantic
-from sqlalchemy import Column
-from sqlalchemy import Integer
-from sqlalchemy import String
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from starlette.graphql import GraphQLApp
 
+from modules.models.models import ReactivationPredictionGraphQL
+from modules.models.models import ReactivationPredictionORM
+
 load_dotenv()
 
 app = FastAPI()
 sql_engine = create_engine(os.getenv("DB_CONNECTION_STRING"))
+session = sessionmaker(sql_engine)()
 Base = declarative_base()
+Base.metadata.create_all(sql_engine)
 
 
-class MemberORM(Base):
-    """
-    SQL ORM of a member
-    """
-
-    __tablename__ = "members"
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    position = Column(String)
-
-
-# Pydantic model of the member
-MemberPydantic = sqlalchemy_to_pydantic(MemberORM)
-
-
-class MemberGQL(PydanticObjectType):
-    """
-    GraphQL model of a member.
-    """
-
-    class Meta:
-        model = MemberPydantic
-
-
-class QueryGQL(graphene.ObjectType):
+class QueryGraphQL(graphene.ObjectType):
     """
     GraphQL query.
+
+    Notes
+    -----
+    hlr_members - members who are likely to reactivate.
     """
 
-    member = graphene.Field(MemberGQL, id=graphene.Int(required=True))
+    member = graphene.Field(ReactivationPredictionGraphQL, member_id=graphene.Int(required=True))
+    hlr_members = graphene.List(ReactivationPredictionGraphQL)
 
     @staticmethod
-    def resolve_member(root: Any, info: Any, id: int) -> MemberGQL:
+    def resolve_member(root: Any, info: Any, member_id: int) -> ReactivationPredictionGraphQL:
         """
         Response on "member" query.
         """
@@ -67,20 +48,43 @@ class QueryGQL(graphene.ObjectType):
         _ = root
         _ = info
 
-        session = sessionmaker(sql_engine)()
-        Base.metadata.create_all(sql_engine)
-
-        response, *_ = session.query(MemberORM).filter(MemberORM.id == id)
+        response, *_ = session.query(ReactivationPredictionORM).filter(
+            ReactivationPredictionORM.member_id == member_id
+        )
         response = {
-            column.name: getattr(response, column.name) for column in MemberORM.__table__.columns
+            column.name: getattr(response, column.name)
+            for column in ReactivationPredictionORM.__table__.columns
         }
 
         # noinspection PyArgumentList
-        return MemberGQL(**response)
+        return ReactivationPredictionGraphQL(**response)
+
+    @staticmethod
+    def resolve_hlr_members(root: Any, info: Any) -> List[ReactivationPredictionGraphQL]:
+        """
+        Response on "hlr_members" query.
+        """
+
+        _ = root
+        _ = info
+
+        response = session.query(ReactivationPredictionORM).filter(
+            ReactivationPredictionORM.reactivation_classification == 1
+        )
+        responses = [
+            {
+                column.name: getattr(record, column.name)
+                for column in ReactivationPredictionORM.__table__.columns
+            }
+            for record in response
+        ]
+
+        # noinspection PyArgumentList
+        return [ReactivationPredictionGraphQL(**record) for record in responses]
 
 
 # noinspection PyTypeChecker
-app.add_route("/", GraphQLApp(schema=graphene.Schema(query=QueryGQL)))
+app.add_route("/", GraphQLApp(schema=graphene.Schema(query=QueryGraphQL)))
 
 if __name__ == "__main__":
     uvicorn.run(app, port=8000, debug=True)

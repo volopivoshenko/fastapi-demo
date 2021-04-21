@@ -7,13 +7,12 @@ import os
 
 from dotenv import load_dotenv
 from faker import Faker
-from sqlalchemy import Column
-from sqlalchemy import Integer
 from sqlalchemy import MetaData
-from sqlalchemy import String
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+
+from modules.models.models import ReactivationPredictionORM
 
 load_dotenv()
 
@@ -24,26 +23,25 @@ fake = Faker()
 Base = declarative_base()
 
 
-class MemberORM(Base):
-    """
-    SQL ORM of a member
-    """
-
-    __tablename__ = "members"
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    position = Column(String)
-
-
 if __name__ == "__main__":
+    # drop table if it exists
     metadata = MetaData(sql_engine)
-    table = metadata.tables.get("members")
-    if table is not None:
-        MemberORM.__table__.drop(sql_engine)
+    table = metadata.tables.get("reactivation_prediction")
+    ReactivationPredictionORM.__table__.drop(sql_engine)
+    ReactivationPredictionORM.__table__.create(sql_engine)
 
     Base.metadata.create_all(sql_engine)
+
     for index in range(100):
-        member = MemberORM(id=index, name=fake.first_name(), position=fake.job())
-        session.add(member)
+        row = ReactivationPredictionORM(
+            index=index,
+            prediction_date=fake.date(),
+            member_id=fake.pyint(),
+            product=fake.company(),
+            lapsed_days=fake.pyint(10, 60),
+            reactivation_probability=fake.pyfloat(min_value=0, max_value=1, right_digits=3),
+            reactivation_classification=fake.pyint(0, 1),
+            model_version="1.0",
+        )
+        session.add(row)
         session.commit()
