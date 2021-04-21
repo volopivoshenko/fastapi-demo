@@ -1,0 +1,16 @@
+pandas
+pydantic
+typing-extensions
+graphene
+black[d]
+uvicorn[standard]
+sqlalchemy
+graphene-pydantic
+Pydantic-SQLAlchemy
+psycopg2
+Faker
+xgboost
+scikit-learn
+arrow
+dohq-artifactory
+fastapi
