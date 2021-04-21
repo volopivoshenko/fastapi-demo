@@ -44,7 +44,15 @@ make graphql
 ```
 
 ```shell
+python src/graphql_example.py
+```
+
+```shell
 make ml
+```
+
+```shell
+python src/ml_model_example.py
 ```
 
 ## Examples
