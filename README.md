@@ -19,6 +19,12 @@ make conda-env
 make py-env
 ```
 
+- Run DB:
+
+```shell
+make run-postgres
+```
+
 - Populate DB:
 
 ```shell
